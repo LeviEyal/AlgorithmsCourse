@@ -1,0 +1,82 @@
+============================================================================
+                                SINGLE SOURCE
+============================================================================
+_____________________________________________________________
+
+//good foor positive wheighted graphs
+function Dijkstra(G, s) {           //s is the starting node
+    for each v ∈ V :
+        d[v] = ∞
+        π(v)=NULL
+
+    d[s] = 0
+    S = ∅
+    Q = V
+    π[s] = NULL
+
+    while (Q is not empty) :
+        v = ExtractMin(Q)
+        S.add(v)
+        for each u ∈ Adj[v]:
+            if (d[u] > d[v] + w(v,u)) :     //the relaxtion step
+                d[u] = d[v] + w(v,u)
+                π[u] = v
+}
+_____________________________________________________________
+
+// O(|V||E|)
+function BellmanFord(G, s) {
+    //init:
+    for each v ∈ V : d[v] = ∞   //d = total distance from start
+    d[s] = 0
+
+    repeat |V|-1 times :
+        for each edge (v,u) ∈ E :
+            if (d[u] > d[v] + w(v,u)) :  //the relaxtion step
+                d[u] = d[v] + w(v,u)
+    //testing for solution:
+    for each edge (v,u) ∈ E :
+        if (d[u] > d[v] + w(v,u)) :
+            return "no solution"
+}
+
+Summary- Single Source Shortest Path :
+    No weights                  BFS             O(|V|+|E|)
+    Non negative weights        Dijkstra        O(|V|^2) / O(|E|*log|V|)
+    Weighted graph              Belman-Ford     O(|V|*|E|)
+
+
+
+============================================================================
+                                ALL PAIRS
+============================================================================
+
+//If no negative-weight edges
+function option1(G) {
+    for each v ∈ V :
+        run Dijkstra(G, v)
+}
+_____________________________________________________________
+
+//If has negative-weight edges
+function option2(G) {
+    for each v ∈ V :
+        run BellmanFord(G, v)
+}
+_____________________________________________________________
+
+function FloydWarshall(W) {
+    D(0) = W
+    for k=1 to n :
+        for i=1 to n :
+            for j=1 to n :
+                dij(k) = min (dij(k-1), dik(k-1) + dkj(k-1))
+    return D(n)
+}
+_____________________________________________________________
+
+Summary- All-Pairs Shortest Paths:
+    No weights              |V| times BFS           O(|V|*(|E|+|V|))
+    Non negative weights    |V| times Dijkstra      O(|V|^3) / O(|V|*|E|*log|V|)
+    Weighted graph          |V| times BelmanFord    O(|V|^2 * |E|)
+    No negative cycles      Floyd-Warshall          O(|V|^3)

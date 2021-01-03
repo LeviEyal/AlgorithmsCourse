@@ -1,0 +1,21 @@
+
+function DFS(G) {
+    for each vertex u ∈ V[G]:
+        color[u] ← WHITE
+        π[u] ← NULL
+    time ← 0
+    for each vertex u ∈ V[G]:
+        if color[u] = WHITE:
+            DFS-Visit(u)
+}
+
+function DFS-Visit(u) {
+    color[u] ← GRAY
+    d[u] ← time++
+    for each v ∈ Adj[u]:
+        if color[v] = WHITE:
+            π[v] ← u
+            DFS-Visit(v)
+    color[u] ← BLACK
+    f[u] ← time++
+}

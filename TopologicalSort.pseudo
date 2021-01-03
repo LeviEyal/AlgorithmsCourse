@@ -1,0 +1,7 @@
+
+function TopologicalSort(DAG G) do
+    A = []
+    run DFS to compute f[v] to all v in V
+        as each v is finished, insert it in front of A
+    return A
+end

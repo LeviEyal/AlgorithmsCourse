@@ -1,0 +1,29 @@
+
+function Kruskal(G) do
+    MST = []
+    for every v in V: make-set(v) //every node is singelton
+    Q = priority queue of G.edges by weights
+    while(Q not empty):
+        e = (src, dst) = Q.ExtrarcMin
+        if find(src) != find(dst):
+            MST.add(e)
+            union(src, dst)
+    return MST 
+end
+
+function Prim(G) do
+    MST = []
+    prev = []
+    for every v in V: v.cost = ∞
+    Q = priority queue of G.nodes by costs
+    while(Q not empty):
+        v = Q.ExtrarcMin
+        for every u in v.adjs:
+            if v in Q & weight(v->u) < v.cost:
+                u.cost = weight(v->u)
+                prev[u] = v
+    for i in prev:
+        MST.add((i, prev[i]))
+    return MST 
+end
+
