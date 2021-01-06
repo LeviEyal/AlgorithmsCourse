@@ -1,0 +1,38 @@
+
+function Kruskal(G) {
+    Sort the edges so that w(e1) ≤ w(e2) ≤ · · · ≤ w(em)
+    foreach v ∈ V do
+        makeset(v)
+    end
+    T ← ∅
+    foreach (u, v) ∈ E do
+        if find(u) != find(v) do
+            T.add((u, v))
+            union(u, v)
+        end
+    end
+}
+
+
+function Prim(G) {
+    P ← priority-queue()
+    foreach v ∈ V \ {s} do
+        p[v] ← null
+        d[v] ← ∞
+        insert(P, v, d[v])
+    end
+    d[s] ← 0
+    insert(Q, s, d[s])
+    T ← ∅
+    while P 6= ∅ do
+        u ← extract-min(P)
+        T.add((p[u], u))
+        foreach (u, v) ∈ E do
+            if v ∈ P and w[u, v] < d[v] do
+                p[v] ← u
+                d[v] ← w[u, v]
+                decrease-key(P, v, d[v])
+            end
+        end
+    end
+}

@@ -30,7 +30,7 @@ function BellmanFord(G, s) {
     for each v ∈ V : d[v] = ∞   //d = total distance from start
     d[s] = 0
 
-    repeat |V|-1 times :
+    repeat |V|-1 times : 
         for each edge (v,u) ∈ E :
             if (d[u] > d[v] + w(v,u)) :  //the relaxtion step
                 d[u] = d[v] + w(v,u)
@@ -42,7 +42,7 @@ function BellmanFord(G, s) {
 
 Summary- Single Source Shortest Path :
     No weights                  BFS             O(|V|+|E|)
-    Non negative weights        Dijkstra        O(|V|^2) / O(|E|*log|V|)
+    Non negative weights        Dijkstra        O(|V|^2) or O(|E|*log|V|)
     Weighted graph              Belman-Ford     O(|V|*|E|)
 
 
@@ -65,18 +65,22 @@ function option2(G) {
 }
 _____________________________________________________________
 
-function FloydWarshall(W) {
-    D(0) = W
-    for k=1 to n :
-        for i=1 to n :
-            for j=1 to n :
-                dij(k) = min (dij(k-1), dik(k-1) + dkj(k-1))
-    return D(n)
+function FloydWarshall(matrix W) {
+    //init:
+    for all v ∈ V : d[v][v] = 0
+    for all (u,v) ∈ E : d[u][v] = w(u,v)
+
+    for k=1 to |V| :
+        for i=1 to |V| :
+            for j=1 to |V| :
+                if d[i][j] > d[i][k] + d[k][j] :
+                    d[i][j] = d[i][k] + d[k][j]
+    return d
 }
 _____________________________________________________________
 
 Summary- All-Pairs Shortest Paths:
     No weights              |V| times BFS           O(|V|*(|E|+|V|))
-    Non negative weights    |V| times Dijkstra      O(|V|^3) / O(|V|*|E|*log|V|)
+    Non negative weights    |V| times Dijkstra      O(|V|^3) or O(|V|*|E|*log|V|)
     Weighted graph          |V| times BelmanFord    O(|V|^2 * |E|)
     No negative cycles      Floyd-Warshall          O(|V|^3)
